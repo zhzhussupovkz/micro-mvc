@@ -19,6 +19,6 @@ $main = array(
 $db = array(
 	'connection' => 'mysql:host=localhost;dbname=micro_mvc',
 	'username' => 'root',
-	'password' => '120391',
+	'password' => '',
 	'charset' => 'utf-8',
 	);
