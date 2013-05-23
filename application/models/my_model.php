@@ -4,7 +4,9 @@ class My_Model extends Model {
 
 	public function getUsers() {
 		$table = 'user';
-		$data = $this->db->select('*')->from($table)->orderBy('name', 'ASC')->read();
+		$where = array('id >= :id');
+		$params = array(':id' => '4');
+		$data = $this->db->select('*')->from($table)->where($where, $params)->orderBy('name', 'ASC')->read();
 		return $data;
 	}
 }

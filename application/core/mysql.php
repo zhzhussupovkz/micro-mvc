@@ -5,6 +5,9 @@ require_once(dirname(__FILE__).'/db.php');
 //MysqlConnection - класс для работы с СУБД MySQL
 class MysqlConnection extends DB {
 
+	//prepared statements
+	public $params;
+
 	//select
 	public $select;
 
@@ -92,12 +95,16 @@ class MysqlConnection extends DB {
 	/*
 	установка WHERE
 	Пример:
-	$where = array('id >= 4', 'name = Hello');
+	$where = array('id >= :id', 'name = :name');
+	$params = array('id' => 2, 'name' => 'Hello');
 	$limit = 10;
-	$this->db->select('*')->from('user')->where($where, $limit)->read();
+	$this->db->select('*')->from('user')->where($where, $params, $limit)->read();
 	*/
-	function where($where = '', $limit = '') {
+	function where($where = '', $params = array(), $limit = '') {
 		if(!empty($where)) {
+
+			//prepare statements
+			$this->params = $params;
 			if(is_array($where)) {
 				$where = "WHERE ".implode(' AND ', $where);
 			}
@@ -182,7 +189,7 @@ class MysqlConnection extends DB {
 		//выполнение запроса
 		try {
 			$sth = $this->pdo->prepare($query);
-			$sth->execute();
+			$sth->execute($this->params);
 			while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
 				$data[] = $row;
 			}
@@ -203,11 +210,14 @@ class MysqlConnection extends DB {
 	*/
 	function insert($table, $data) {
 
+		//prepare statements
+		$this->params = $data;
+
 		//выполнение запроса
-		$query = "INSERT INTO ".$table." (".implode(',', array_keys($data)).") VALUES ('".implode("','",$data)."')";
+		$query = "INSERT INTO ".$table." (".implode(',', array_keys($data)).") VALUES (:".implode(",:",array_keys($data)).")";
 		try {
 			$sth = $this->pdo->prepare($query);
-			$sth->execute();
+			$sth->execute($this->params);
 			$this->reset();
 			return true;
 		}
@@ -221,8 +231,9 @@ class MysqlConnection extends DB {
 	обновление данных
 	Пример:
 	$new = array('name' => 'Hello');
-	$where = array('name = "World"');
-	$this->db->where($where)->update($table, $new);
+	$where = array('name = :name');
+	$params = array('name' => 'World');
+	$this->db->where($where, $params)->update($table, $new);
 	*/
 	function update($table, $new) {
 
@@ -235,7 +246,7 @@ class MysqlConnection extends DB {
 
 		try {
 			$sth = $this->pdo->prepare($query);
-			$sth->execute();
+			$sth->execute($this->params);
 			$this->reset();
 		}
 		catch (PDOException $e) {
@@ -265,9 +276,10 @@ class MysqlConnection extends DB {
 	/*
 	удаление данных с таблицы
 	Пример:
-	$where = array('id = 2', 'name' => 'Hello');
+	$where = array('id = :id', 'name = :name');
+	$params = array('id' => '2', 'name' => 'Hello');
 	$table = 'user';
-	$this->db->where($where)->delete($table);
+	$this->db->where($where, $params)->delete($table);
 	*/
 	function delete($table) {
 
@@ -275,7 +287,8 @@ class MysqlConnection extends DB {
 
 		//выполнение запроса
 		try {
-			$this->pdo->exec($query);
+			$sth = $this->pdo->prepare($query);
+			$sth->execute($this->params);
 			$this->reset();
 		}
 		catch (PDOException $e) {
@@ -286,9 +299,10 @@ class MysqlConnection extends DB {
 	/*
 	кол-во выбранных данных
 	Пример:
-	$where = 'city_id = 5';
+	$where = array('city_id = :city_id');
+	$params = array('city_id' => '5');
 	$table = 'company';
-	$this->db->where($where)->count($table);
+	$this->db->where($where, $params)->count($table);
 	*/
 	function count($table) {
 
@@ -297,7 +311,7 @@ class MysqlConnection extends DB {
 		//выполнение запроса
 		try {
 			$sth = $this->pdo->prepare($query);
-			$sth->execute();
+			$sth->execute($this->params);
 			$count = $sth->fetchColumn();
 			$this->reset();
 			return $count;
@@ -315,7 +329,7 @@ class MysqlConnection extends DB {
 	*/
 	function countAll($table) {
 
-		$query = trim("SELECT COUNT(*) FROM ".$table);
+		$query = trim("SELECT COUNT (*) FROM ".$table);
 
 		//выполнение запроса
 		try {
@@ -334,16 +348,18 @@ class MysqlConnection extends DB {
 	выборка одного элемента
 	Пример:
 	$table = 'user';
-	$where = array('city_id = 3');
-	$this->db->selectOne($table, $where);
+	$where = array('city_id = :city_id');
+	$params = array('city_id' => 3);
+	$this->db->selectOne($table, $where, $params);
 	*/
-	function selectOne($table, $where) {
-		$this->where($where);
+	function selectOne($table, $where, $params) {
+		$this->where = $where;
+		$this->params = $params;
 		$query = "SELECT * FROM ".$table." ".$this->where." LIMIT 1";
 
 		try {
 			$sth = $this->pdo->prepare($query);
-			$sth->execute();
+			$sth->execute($this->params);
 			$data = $sth->fetch(PDO::FETCH_ASSOC);
 			$this->reset();
 			return $data;
