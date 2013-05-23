@@ -103,7 +103,7 @@ class MysqlConnection extends DB {
 	function where($where = '', $params = array(), $limit = '') {
 		if(!empty($where)) {
 
-			//prepare statements
+			//prepared statements
 			$this->params = $params;
 			if(is_array($where)) {
 				$where = "WHERE ".implode(' AND ', $where);
@@ -210,7 +210,7 @@ class MysqlConnection extends DB {
 	*/
 	function insert($table, $data) {
 
-		//prepare statements
+		//prepared statements
 		$this->params = $data;
 
 		//выполнение запроса
@@ -400,5 +400,6 @@ class MysqlConnection extends DB {
 		$this->limit = '';
 		$this->like = '';
 		$this->orderBy = '';
+		$this->params = '';
 	}
 }
