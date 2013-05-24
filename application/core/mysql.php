@@ -105,6 +105,7 @@ class MysqlConnection extends DB {
 
 			//prepared statements
 			$this->params = $params;
+
 			if(is_array($where)) {
 				$where = "WHERE ".implode(' AND ', $where);
 			}
@@ -353,8 +354,14 @@ class MysqlConnection extends DB {
 	$this->db->selectOne($table, $where, $params);
 	*/
 	function selectOne($table, $where, $params) {
+
+		if(is_array($where)) {
+			$where = "WHERE ".implode(' AND ', $where);
+		}
+
 		$this->where = $where;
 		$this->params = $params;
+
 		$query = "SELECT * FROM ".$table." ".$this->where." LIMIT 1";
 
 		try {

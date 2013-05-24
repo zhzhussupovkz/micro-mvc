@@ -3,5 +3,5 @@
 <?php
 	foreach ($data as $value) {
 		echo '<p>'.$value['name'].'</p>';
-}
+	}
 ?>
