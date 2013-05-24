@@ -362,12 +362,12 @@ class MysqlConnection extends DB {
 		$this->where = $where;
 		$this->params = $params;
 
-		$query = "SELECT * FROM ".$table." ".$this->where." LIMIT 1";
+		$query = trim("SELECT * FROM ".$table." ".$this->where." LIMIT 1");
 
 		try {
 			$sth = $this->pdo->prepare($query);
 			$sth->execute($this->params);
-			$data = $sth->fetch(PDO::FETCH_ASSOC);
+			$data = $sth->fetch();
 			$this->reset();
 			return $data;
 		}
