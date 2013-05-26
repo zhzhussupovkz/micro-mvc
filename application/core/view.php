@@ -40,7 +40,7 @@ class View {
 
 	//установка css стиля страницы
 	public function setStyle($style) {
-		$stylePath = $this->baseUrl().'/scripts/css/'.$style.'.css';
+		$stylePath = $this->baseUrl().'/css/'.$style.'.css';
 		$this->style = $stylePath;
 	}
 

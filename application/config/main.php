@@ -18,7 +18,7 @@ $main = array(
 //параметры соединения с БД
 $db = array(
 	'connection' => 'mysql:host=localhost;dbname=micro_mvc',
-	'username' => '',
-	'password' => '',
+	'username' => 'root',
+	'password' => '120391',
 	'charset' => 'utf-8',
 	);
