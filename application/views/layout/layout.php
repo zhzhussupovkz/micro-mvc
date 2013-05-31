@@ -19,6 +19,11 @@
 		<p><?php echo HtmlHelper::link('my/about', 'About'); ?></p>
 		<p><?php echo HtmlHelper::link('doc', 'Documentation'); ?></p>
 		<p><?php echo HtmlHelper::link('my/contact', 'Contact'); ?></p>
+		<?php if (is_null(MyApplication::get()->user)) { ?>
+		<p><?php echo HtmlHelper::link('my/login', 'Login'); ?></p>
+		<?php } else { ?>
+		<p><?php echo HtmlHelper::link('my/logout', 'Logout'); ?></p>
+		<?php } ?>
 	</div>
 
 	<div id="rightcolumn">

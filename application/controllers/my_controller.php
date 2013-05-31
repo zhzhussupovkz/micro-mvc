@@ -39,4 +39,27 @@ class My_Controller extends Controller {
 		}
 		$this->view->render('contact', array('data' => $data));
 	}
+
+	//базовый пример входа
+	public function actionLogin() {
+		$this->view->setTitle('Login');
+		if (isset($_POST['username'])) {
+			$user = new User($_POST['username'], $_POST['password']);
+			if (Auth::check($user)) {
+				Auth::login($user);
+				$data = array('auth' => 'Welcome to our site!');
+			} else {
+				$data = array('auth' =>'Incorrect username or password!');
+			}
+		} else {
+			$data = array('message' => 'Please enter username and password');
+		}
+		$this->view->render('login', array('data' => $data));
+	}
+
+	//выход
+	public function actionLogout() {
+		Auth::logout();
+		$this->view->render('home');
+	}
 }

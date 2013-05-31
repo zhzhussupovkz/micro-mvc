@@ -6,6 +6,9 @@ class MyApplication {
 	//параметры приложения
 	public $params = array();
 
+	//текущий пользователь приложения
+	public $user = null;
+
 	/*
 	статичный метод для хранения 
 	экземпляра класса NewApplication
@@ -30,6 +33,16 @@ class MyApplication {
 	//установка параметров приложения
 	public function setParams() {
 		$this->params = Config::getMainConfig();
+	}
+
+	//установка текущего пользователя
+	public function setUser(User $user) {
+		$this->user = $user;
+	}
+
+	//удаление текущего пользователя
+	public function removeUser() {
+		$this->user = null;
 	}
 
 	//получение параметров приложения
@@ -59,6 +72,9 @@ class MyApplication {
 		require_once(dirname(__FILE__).'/core/view.php');
 		require_once(dirname(__FILE__).'/core/mysql.php');
 		require_once(dirname(__FILE__).'/core/session.php');
+		require_once(dirname(__FILE__).'/core/bauth.php');
+		require_once(dirname(__FILE__).'/components/user.php');
+		require_once(dirname(__FILE__).'/components/auth.php');
 		require_once(dirname(__FILE__).'/core/route.php');
 		Route::start();
 	}

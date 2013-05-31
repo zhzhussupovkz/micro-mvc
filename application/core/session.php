@@ -6,6 +6,11 @@ class Session {
 	//экземпляр session
 	public static $instance;
 
+	//construct
+	protected function __construct() {
+		//...
+	}
+
 	//старт сессии
 	public static function init() {
 		if(!isset(self::$instance)) {
