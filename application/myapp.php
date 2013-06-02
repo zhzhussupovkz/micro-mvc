@@ -6,12 +6,9 @@ class MyApplication {
 	//параметры приложения
 	public $params = array();
 
-	//текущий пользователь приложения
-	public $user = null;
-
 	/*
 	статичный метод для хранения 
-	экземпляра класса NewApplication
+	экземпляра класса MyApplication
 	*/
 	public static $instance;
 
@@ -35,23 +32,13 @@ class MyApplication {
 		$this->params = Config::getMainConfig();
 	}
 
-	//установка текущего пользователя
-	public function setUser(User $user) {
-		$this->user = $user;
-	}
-
-	//удаление текущего пользователя
-	public function removeUser() {
-		$this->user = null;
-	}
-
 	//получение параметров приложения
 	public function params($key) {
 		return $this->params[$key];
 	}
 
 	/*
-	создаем объект NewApplication и 
+	создаем объект MyApplication и 
 	сохраняем его в статичном методе $instance
 	*/
 	public static function get() {

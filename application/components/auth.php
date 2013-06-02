@@ -12,4 +12,10 @@ class Auth extends BaseAuth {
 	public static function check(User $user) {
 		return parent::check($user);
 	}
+
+	/*
+	Здесь можно перегружать методы
+	login, logout, isAuthorized
+	*/
+	//...
 }

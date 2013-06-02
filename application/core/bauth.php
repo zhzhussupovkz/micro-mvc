@@ -3,27 +3,20 @@
 //BaseAuth - базовый класс аутентификации
 class BaseAuth {
 
-	//текущий пользователь
-	public static $user;
-
 	//создание пользователя и запись его данных в сессию
 	public static function login(User $user) {
-		self::$user = $user;
-		MyApplication::get()->setUser($user);
 		Session::init()->set('name', $user->name);
 	}
 
 	//удаление данных пользователя
 	public static function logout() {
-		self::$user = null;
-		MyApplication::get()->removeUser();
-		Session::clear();
+		Session::init()->clear();
 	}
 
 	//проверка авторизованности пользователя
 	public static function isAuthorized(User $user) {
-		if (!is_null(self::$user)) {
-			if (self::$user == $user) {
+		if (!is_null(Session::init()->current())) {
+			if (Session::init()->get('name') == $user->name) {
 				return true;
 			} else {
 				return false;
