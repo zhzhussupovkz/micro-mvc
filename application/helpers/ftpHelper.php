@@ -205,7 +205,7 @@ class FtpHelper extends Helper {
 	}
 
 	//получение списка файлов из указанной папки
-	public function list($directory) {
+	public function listDir($directory) {
 		return ftp_nlist($this->conn, $directory);
 	}
 }
