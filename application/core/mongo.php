@@ -7,13 +7,13 @@ class MongoConnection {
 	public $conn;
 
 	//БД
-	public $db = 'test';
+	public $db;
 
 	//коллекция
 	public $collection;
 
 	//подключение к БД (например: mongodb://localhost:27017)
-	public function __constructor($connection) {
+	public function __construct($connection) {
 		$this->conn = new MongoClient($connection);
 	}
 

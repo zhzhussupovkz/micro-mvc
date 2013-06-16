@@ -58,6 +58,7 @@ class MyApplication {
 		require_once(dirname(__FILE__).'/core/model.php');
 		require_once(dirname(__FILE__).'/core/view.php');
 		require_once(dirname(__FILE__).'/core/mysql.php');
+		require_once(dirname(__FILE__).'/core/mongo.php');
 		require_once(dirname(__FILE__).'/core/session.php');
 		require_once(dirname(__FILE__).'/core/bauth.php');
 		require_once(dirname(__FILE__).'/components/user.php');
