@@ -1,10 +1,10 @@
 <?php
 
-//класс для работы с MongoDb
-class MongoConnection {
+//MongoConnection - класс для работы с MongoDb
+class MongoConnection extends DB {
 
-	//текущее соединение
-	public $conn;
+	//текущий клиент mongo
+	public $client;
 
 	//БД
 	public $db;
@@ -12,14 +12,44 @@ class MongoConnection {
 	//коллекция
 	public $collection;
 
-	//подключение к БД (например: mongodb://localhost:27017)
-	public function __construct($connection) {
-		$this->conn = new MongoClient($connection);
+	//construct
+	public function __construct($conn) {
+		$this->conn = $conn;
+		$this->open();
+	}
+
+	//соединение к БД (например: mongodb://localhost:27017)
+	function open() {
+		try {
+			if (!is_null($this->conn['username']) && !is_null($this->conn['password']))
+				$dsn = $this->conn['driver'].'://'.$this->conn['username'].':'.$this->conn['password'].'@'.$this->conn['host'];
+			else
+				$dsn = 'mongodb://localhost';
+			$client = new MongoClient($dsn);
+			$this->client = $client;
+			$db = $this->conn['dbname'];
+			$this->selectDb($db);
+			return true;
+		}
+		catch (MongoConnectionException $e) {
+			echo 'Не удалось установить соединение с БД'.$e->getMessage();
+			return false;
+		}
+	}
+
+	//закрытие соединения
+	function close() {
+		if($this->open()) {
+			$connections = $client->getConnections();
+			foreach ($connections as $c) {
+				$client->close($c['hash']);
+			}
+		}
 	}
 
 	//выбрать базу
 	public function selectDb($db) {
-		$this->db = $this->conn->$db;
+		$this->db = $this->client->$db;
 	}
 
 	//выбрать коллекцию
@@ -41,6 +71,10 @@ class MongoConnection {
 	}
 
 	//выборка по id
+	/*
+	$id = '51b5c94e848dedf60f000001';
+	$this->db->findById($id);
+	*/
 	public function findById($id) {
 		$id = new MongoId($id);
 		$data = $this->collection->findOne(array('_id' => $id));

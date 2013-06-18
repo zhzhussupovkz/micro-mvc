@@ -1,7 +1,5 @@
 <?php
 
-require_once(dirname(__FILE__).'/db.php');
-
 //MysqlConnection - класс для работы с СУБД MySQL
 class MysqlConnection extends DB {
 
@@ -38,7 +36,7 @@ class MysqlConnection extends DB {
 	//соединение с БД
 	function open() {
 
-		$dsn = $this->conn['connection'];
+		$dsn = $this->conn['driver'].':host='.$this->conn['host'].';dbname='.$this->conn['dbname'];
 		$username = $this->conn['username'];
 		$password = $this->conn['password'];
 		$charset = $this->conn['charset'];
