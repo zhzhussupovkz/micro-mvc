@@ -64,7 +64,7 @@ class MyApplication {
 		require_once(dirname(__FILE__).'/core/bauth.php');
 		require_once(dirname(__FILE__).'/components/user.php');
 		require_once(dirname(__FILE__).'/components/auth.php');
+		require_once(dirname(__FILE__).'/core/request.php');
 		require_once(dirname(__FILE__).'/core/route.php');
-		Route::start();
 	}
 }

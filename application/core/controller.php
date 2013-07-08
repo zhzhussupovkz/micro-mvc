@@ -11,4 +11,9 @@ class Controller {
 		$this->view = new View();
 		$this->load = new Load();
 	}
+
+	//создание модели
+	public function setModel($model) {
+		$this->model = $model;
+	}
 }

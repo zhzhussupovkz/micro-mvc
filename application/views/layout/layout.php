@@ -8,7 +8,7 @@
 <body>
 <div id="wrapper">
 	<div id="header">
-		<p><?php echo HtmlHelper::image('logo', HtmlHelper::baseUrl().'/scripts/css/logo.png','', '64', '64'); ?></p>
+		<p><?php echo HtmlHelper::image('logo', HtmlHelper::baseUrl().'/css/logo.png','', '64', '64'); ?></p>
 		<h1><?php echo MyApplication::get()->params('name');?></h1>
 	</div>
 

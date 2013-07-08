@@ -3,50 +3,26 @@
 //класс для роутинга
 class Route {
 
-	public static function start() {
+	public static function start(Request $request) {
 
-		//контроллер по умолчанию
-		$defaultController = MyApplication::get()->params('defaultController');
-
-		//действие по умолчанию
-		$defaultAction = 'Index';
-
-		//текущий URL
-		$routes = explode('/', $_SERVER['REQUEST_URI']); 
-
-		//имя контроллера
-		if(!empty($routes[2])) {
-			$defaultController = $routes[2];
-		}
-		else {
-			Route::Error404();
-		}
-
-		//имя экшена
-		if(!empty($routes[3])) {
-			$defaultAction = $routes[3];
-		}
-		else {
-			Route::Error404();
-		}
-
-		//префиксы для имен контроллера и модели
-		$controllerName = $defaultController.'_Controller';
-		$modelName = $defaultController.'_Model';
-		$actionName = 'action'.$defaultAction;
+		//префиксы для имен контроллера, модели, экшена
+		$controllerName = $request->getController().'_Controller';
+		$modelName = $request->getController().'_Model';
+		$actionName = 'action'.$request->getAction();
+		$params = $request->getParams();
 
 		//подключение файла с классом модели
 		$modelFile = strtolower($modelName.'.php');
 		$modelPath = dirname(__FILE__).'/../models/'.$modelFile;
 		if (file_exists($modelPath)) {
-			include $modelPath;
+			require_once($modelPath);
 		}
 
-		//подключение файла с классом контроллера
+		//подключение файлов с классами контроллеров
 		$controllerFile = strtolower($controllerName.'.php');
 		$controllerPath = dirname(__FILE__).'/../controllers/'.$controllerFile;
 		if(file_exists($controllerPath)) {
-			include $controllerPath;
+			require_once($controllerPath);
 		}
 		else {
 			Route::Error404();
@@ -56,22 +32,27 @@ class Route {
 		$controller = new $controllerName;
 
 		//модель
-		$controller->model = new $modelName();
+		$controller->setModel(new $modelName());
 
-		//экшен
-		$action = $actionName;
+		//если метод с именем 
+		$action = method_exists($controller, $actionName) ? $actionName : 'actionIndex';
 
-		//если такой метод в контроллере существует, то вызываем его
-		if(method_exists($controller, $action)) {
-			$controller->$action();
+		//вызываем экшен
+		if (!empty($params)) {
+			call_user_func_array(array($controller, $action), $params);
+		} else {
+			call_user_func(array($controller, $action));
 		}
-		else {
-			Route::Error404();
-		}
+		return;
 	}
 
-	//404 Not Found
+	//Код ошибки 404
 	public static function Error404() {
-		//...
+		require_once(dirname(__FILE__).'/../controllers/error_controller.php');
+		$controller = new Error_Controller;
+		$controller->action404();
 	}
 }
+
+//старт роутинга
+Route::start(new Request());

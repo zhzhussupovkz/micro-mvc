@@ -12,7 +12,10 @@ $main = array(
 	'baseUrl'=>  'http://localhost/micro-mvc',
 
 	//контроллер по умолчанию
-	'defaultController' => 'My',
+	'defaultController' => 'my',
+
+	//экшен по умолчанию
+	'defaultAction' => 'index',
 	);
 
 //параметры соединения с MySQL

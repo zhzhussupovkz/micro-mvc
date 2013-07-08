@@ -25,11 +25,16 @@ class MongoConnection extends DB {
 				$dsn = $this->conn['driver'].'://'.$this->conn['username'].':'.$this->conn['password'].'@'.$this->conn['host'];
 			else
 				$dsn = 'mongodb://localhost';
-			$client = new MongoClient($dsn);
-			$this->client = $client;
-			$db = $this->conn['dbname'];
-			$this->selectDb($db);
-			return true;
+			if ($this->isSupported()) {
+				$client = new MongoClient($dsn);
+				$this->client = $client;
+				$db = $this->conn['dbname'];
+				$this->selectDb($db);
+				return true;
+			} else {
+				echo 'Не удалось загрузить расширение MongoDB для PHP';
+				return false;
+			}
 		}
 		catch (MongoConnectionException $e) {
 			echo 'Не удалось установить соединение с БД'.$e->getMessage();
@@ -128,6 +133,16 @@ class MongoConnection extends DB {
 			$this->collection->remove($where);
 		} catch (MongoCursorException $e) {
 			echo 'Error removing data!';
+		}
+	}
+
+	//проверить доступно ли расширение PHP MongoDB
+	private function isSupported() {
+		if (extension_loaded('mongo')) {
+			return true;
+		} else {
+			throw new Exception("PHP MongoDB extension is not loaded. Please go to the http://http://www.php.net/manual/ru/mongo.installation.php or http://docs.mongodb.org/ecosystem/drivers/php/");
+			return false;
 		}
 	}
 }
