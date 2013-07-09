@@ -1,0 +1,37 @@
+* {
+	margin: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+#wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -80px;
+	width: auto;
+	max-width: 950px;
+}
+
+#push {
+	height: 100px;
+}
+
+#footer {
+	height: 80px;
+	width: auto;
+	max-width: 950px;
+	margin: auto;
+	background-color: #000000;
+}
+
+.container .credit {
+	margin: 20px 0;
+	margin-left: 20px;
+}
+
+.navbar {
+	max-width: 950px;
+}

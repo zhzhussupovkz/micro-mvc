@@ -8,6 +8,12 @@ class HtmlHelper extends Helper {
 		return MyApplication::get()->params('baseUrl');
 	}
 
+	//создает URL
+	public static function newUrl($string = '') {
+		$newUrl = self::baseUrl().''.$string;
+		return $newUrl;
+	}
+
 	//загружает js файл
 	public static function scriptFile($filename) {
 		$scriptFile = self::baseUrl().'/scripts/js/'.$filename;
@@ -22,65 +28,76 @@ class HtmlHelper extends Helper {
 		return $css;
 	}
 
+	//html опции
+	public static function htmlOptions($options = array()) {
+		$opt = '';
+		if (!is_null($options)) {
+			foreach ($options as $key => $value) {
+				$opt.= $key.' = "'.$value.'"';
+			}
+		}
+		return $opt;
+	}
+
 	//создает ссылку
-	public static function link($href, $label) {
+	public static function link($href, $label, $options = array()) {
 		$htmlLink = self::baseUrl().'/'.$href;
-		$link = '<a href = '.$htmlLink.'>'.$label.'</a>';
+		$link = '<a href = '.$htmlLink.' '.self::htmlOptions($options).'>'.$label.'</a>';
 		return $link;
 	}
 
 	//создает текстовое поле
-	public static function textInput($id, $name = '', $value = '') {
-		$input = '<input id = "'.$id.'" type = "text" name = "'.$name.'" value = "'.$value.'"/>';
+	public static function textInput($name = '', $options = array()) {
+		$input = '<input type = "text" name = "'.$name.'" '.self::htmlOptions($options).'/>';
 		return $input;
 	}
 
 	//создает поле для ввода пароля
-	public static function passInput($id, $name = '') {
-		$input = '<input id = "'.$id.'" type = "password" name = "'.$name.'"/>';
+	public static function passInput($name = '', $options = array()) {
+		$input = '<input type = "password" name = "'.$name.'" '.self::htmlOptions($options).'/>';
 		return $input;
 	}
 
 	//создает скрытое поле
-	public static function hiddenInput($id, $name = '', $value = '') {
-		$input = '<input id = "'.$id.'" type = "hidden" name = "'.$name.'" value = "'.$value.'"/>';
+	public static function hiddenInput($name = '', $options = array()) {
+		$input = '<input type = "hidden" name = "'.$name.'" '.self::htmlOptions($options).'/>';
 		return $input;
 	}
 
 	//создает кнопку
-	public static function button($id, $value = '') {
-		$button = '<input id = "'.$id.'" type = "button" value = "'.$value.'"/>';
+	public static function button($value = '', $options = array()) {
+		$button = '<button type = "button" '.self::htmlOptions($options).'>'.$value.'</button>';
 		return $button;
 	}
 
 	//создает кнопку отправки формы
-	public static function buttonSubmit($id, $value = '') {
-		$button = '<input id = "'.$id.'" type = "submit" value = "'.$value.'"/>';
+	public static function buttonSubmit($value = '', $options = array()) {
+		$button = '<button type = "submit" '.self::htmlOptions($options).'>'.$value.'</button>';
 		return $button;
 	}
 
 	//создает поле для ввода текста
-	public static function textArea($id, $name, $rows = '10', $cols = '30') {
-		$textarea = '<textarea id = "'.$id.'" name = "'.$name.'" rows = "'.$rows.'" cols = "'.$cols.'"></textarea>';
+	public static function textArea($name = '', $options = array()) {
+		$textarea = '<textarea name = "'.$name.'" '.self::htmlOptions($options).'></textarea>';
 		return $textarea;
 	}
 
 	//создает картинку
-	public static function image($id, $src, $alt = '', $width, $height) {
-		$img = '<img src = "'.$src.'" alt = "'.$alt.'" width = '.$width.' height = '.$height.'/>';
+	public static function image($src, $alt = '', $options = array()) {
+		$img = '<img src = "'.$src.'" alt = "'.$alt.'" '.self::htmlOptions($options).'/>';
 		return $img;
 	}
 
 	//создает ссылку отправки письма
-	public static function mailTo($mail, $string) {
-		$mail = '<a href = "mailto:'.$mail.'">'.$string.'</a>';
+	public static function mailTo($mail, $string, $options = array()) {
+		$mail = '<a href = "mailto:'.$mail.'" '.self::htmlOptions($options).'>'.$string.'</a>';
 		return $mail;
 	}
 
 	//открывающий тег form
-	public static function formOpen($id, $action, $method = 'POST') {
+	public static function formOpen($action, $method = 'POST', $options = array()) {
 		$action = self::baseUrl().'/'.$action;
-		$form = '<form id = "'.$id.'" action = "'.$action.'" method = "'.$method.'">';
+		$form = '<form action = "'.$action.'" method = "'.$method.'" '.self::htmlOptions($options).'>';
 		return $form;
 	}
 
@@ -115,7 +132,7 @@ class HtmlHelper extends Helper {
 	}
 
 	//генерация AJAX-кнопки
-	public static function buttonAjax($id, $value = '', $ajaxOptions = array()) {
+	public static function buttonAjax($value = '', $ajaxOptions = array(), $options = array()) {
 		$script = '<script type = "text/javascript">
 		$(document).ready(function() {
 			$("#'.$id.'").click(function(){
@@ -124,7 +141,7 @@ class HtmlHelper extends Helper {
 		});
 		</script>';
 		echo $script;
-		$button = '<input id = "'.$id.'" type = "button" value = "'.$value.'"/>';
+		$button = '<button type = "button" '.self::htmlOptions($options).'>'.$value.'</button>';
 		return $button;
 	}
 }

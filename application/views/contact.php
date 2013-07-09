@@ -1,16 +1,20 @@
 <?php echo '<h1>Contact Us</h1>'; ?>
 
 <?php if (isset($data['thanks'])) {
+	echo '<div class="alert alert-success">';
 	echo $data['thanks'];
+	echo '</div>';
 }
 else { 
 ?>
-<?php echo $data['message']; ?>
-<?php echo HtmlHelper::formOpen('form', 'my/contact', 'POST'); ?>
-<p>Name: <br/><?php echo HtmlHelper::textInput('myname', 'name'); ?></p>
-<p>Email: <br/><?php echo HtmlHelper::textInput('email', 'email'); ?></p>
-<p>Subject: <br/><?php echo HtmlHelper::textInput('subject', 'subject'); ?></p>
-<p>Message: <br/><?php echo HtmlHelper::textArea('message', 'message'); ?></p>
-<p><?php echo HtmlHelper::buttonSubmit('button1', 'OK'); ?></p>
+<p class="text-info">
+	<?php echo $data['message']; ?>
+</p>
+<?php echo HtmlHelper::formOpen('my/contact', 'POST' , array('id' => 'myform')); ?>
+<p><label> Name: </label><?php echo HtmlHelper::textInput('name'); ?></p>
+<p><label> Email: </label><?php echo HtmlHelper::textInput('email'); ?></p>
+<p><label> Subject: </label><?php echo HtmlHelper::textInput('subject'); ?></p>
+<p><label> Message: </label><?php echo HtmlHelper::textArea('message', array('rows' => '10', 'cols' => '10')); ?></p>
+<p><?php echo HtmlHelper::buttonSubmit('Contact' , array('class' => 'btn btn-primary')); ?></p>
 <?php echo HtmlHelper::formClose(); ?>
 <?php } ?>

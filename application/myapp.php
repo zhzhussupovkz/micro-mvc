@@ -52,19 +52,19 @@ class MyApplication {
 
 	//запуск нового приложения
 	public static function run() {
-		require_once(dirname(__FILE__).'/config/config.php');
-		require_once(dirname(__FILE__).'/core/load.php');
-		require_once(dirname(__FILE__).'/core/controller.php');
-		require_once(dirname(__FILE__).'/core/model.php');
-		require_once(dirname(__FILE__).'/core/view.php');
-		require_once(dirname(__FILE__).'/core/db.php');
-		require_once(dirname(__FILE__).'/core/mysql.php');
-		require_once(dirname(__FILE__).'/core/mongo.php');
-		require_once(dirname(__FILE__).'/core/session.php');
-		require_once(dirname(__FILE__).'/core/bauth.php');
-		require_once(dirname(__FILE__).'/components/user.php');
-		require_once(dirname(__FILE__).'/components/auth.php');
-		require_once(dirname(__FILE__).'/core/request.php');
-		require_once(dirname(__FILE__).'/core/route.php');
+		require_once(APP_PATH.'/config/config.php');
+		require_once(APP_PATH.'/core/load.php');
+		require_once(APP_PATH.'/core/controller.php');
+		require_once(APP_PATH.'/core/model.php');
+		require_once(APP_PATH.'/core/view.php');
+		require_once(APP_PATH.'/core/db.php');
+		require_once(APP_PATH.'/core/mysql.php');
+		require_once(APP_PATH.'/core/mongo.php');
+		require_once(APP_PATH.'/core/session.php');
+		require_once(APP_PATH.'/core/bauth.php');
+		require_once(APP_PATH.'/components/user.php');
+		require_once(APP_PATH.'/components/auth.php');
+		require_once(APP_PATH.'/core/request.php');
+		require_once(APP_PATH.'/core/route.php');
 	}
 }

@@ -27,8 +27,8 @@ class View {
 		if (!is_null($data)) {
 			extract($data);
 		}
-		$content = dirname(__FILE__).'/../views/'.$content.'.php';
-		$layoutPath = dirname(__FILE__).'/../views/layout/'.$this->layout.'.php';
+		$content = APP_PATH.'/views/'.$content.'.php';
+		$layoutPath = APP_PATH.'/views/layout/'.$this->layout.'.php';
 		include $layoutPath;
 	}
 

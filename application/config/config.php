@@ -1,7 +1,7 @@
 <?php
 
 //подключаем параметры
-require_once(dirname(__FILE__).'/main.php');
+require_once(APP_PATH.'/config/main.php');
 
 //Config - класс конфигурации приложения
 class Config {

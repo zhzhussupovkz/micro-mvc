@@ -47,9 +47,9 @@ class My_Controller extends Controller {
 			$user = new User($_POST['username'], $_POST['password']);
 			if (Auth::check($user)) {
 				Auth::login($user);
-				$data = array('auth' => 'Welcome to our site!');
+				$data = array('auth' => 'Welcome to our site!', 'type' => 'alert-success');
 			} else {
-				$data = array('auth' =>'Incorrect username or password!');
+				$data = array('auth' =>'Incorrect username or password!', 'type' => 'alert-error');
 			}
 		} else {
 			$data = array('message' => 'Please enter username and password');

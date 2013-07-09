@@ -13,14 +13,14 @@ class Route {
 
 		//подключение файла с классом модели
 		$modelFile = strtolower($modelName.'.php');
-		$modelPath = dirname(__FILE__).'/../models/'.$modelFile;
+		$modelPath = APP_PATH.'/models/'.$modelFile;
 		if (file_exists($modelPath)) {
 			require_once($modelPath);
 		}
 
 		//подключение файлов с классами контроллеров
 		$controllerFile = strtolower($controllerName.'.php');
-		$controllerPath = dirname(__FILE__).'/../controllers/'.$controllerFile;
+		$controllerPath = APP_PATH.'/controllers/'.$controllerFile;
 		if(file_exists($controllerPath)) {
 			require_once($controllerPath);
 		}
@@ -48,7 +48,7 @@ class Route {
 
 	//Код ошибки 404
 	public static function Error404() {
-		require_once(dirname(__FILE__).'/../controllers/error_controller.php');
+		require_once(APP_PATH.'/controllers/error_controller.php');
 		$controller = new Error_Controller;
 		$controller->action404();
 	}
