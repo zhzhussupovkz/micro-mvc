@@ -36,3 +36,10 @@ $db = array(
 	'username' => null,
 	'password' => null,
 	);*/
+
+//параметры соединения с Memcache
+$memcache = array(
+	'host' => 127.0.0.1,
+	'port' => 11211,
+	);
+

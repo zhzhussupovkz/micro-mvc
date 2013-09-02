@@ -13,7 +13,7 @@ class Model {
 	public function __construct() {
 
 		//конфигурация соединения с БД
-		$this->config = Config::getDbConfig();
+		$this->config = Config::getParams('db');
 	}
 
 }

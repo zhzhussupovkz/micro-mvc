@@ -7,32 +7,20 @@ require_once(APP_PATH.'/config/main.php');
 class Config {
 
 	//параметры приложения
-	public static $main = array();
-
-	//параметры БД
-	public static $db = array();
+	private static $params = array();
 
 	//установка параметров приложения
-	public static function setMainConfig($main) {
-		self::$main = $main;
+	public static function setParams($key, $value) {
+		self::$params[$key] = $value;
 	}
 
 	//получение параметров приложения
-	public static function getMainConfig() {
-		return self::$main;
-	}
-
-	//установка параметров БД
-	public static function setDbConfig($db) {
-		self::$db = $db;
-	}
-
-	//получение параметров БД
-	public static function getDbConfig() {
-		return self::$db;
+	public static function getParams($key) {
+		return self::$params[$key];
 	}
 }
 
 //установка параметров
-Config::setMainConfig($main);
-Config::setDbConfig($db);
+Config::setParams('main', $main);
+Config::setParams('db', $db);
+Config::setParams('memcache', $memcache);

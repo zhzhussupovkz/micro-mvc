@@ -19,10 +19,9 @@ class My_Controller extends Controller {
 
 	//о сайте
 	public function actionAbout() {
-		$data = $this->model->getUsers();
 		$this->view->setLayout('layout');
 		$this->view->setTitle('About my site');
-		$this->view->render('about', array('data' => $data));
+		$this->view->render('about');
 	}
 
 	//форма обратной связи

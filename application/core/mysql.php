@@ -175,7 +175,7 @@ class MysqlConnection extends DB {
 	$order = '';
 	$data = $this->db->select('*')->from($table)->orderBy($order, 'ASC')->read();
 	$data = $this->db->select('*')->from($table)->like($like)->read();
-	$data = $this->db->select($condition)->where('id > 3')->read();
+	$data = $this->db->select($condition)->from($table)->where('id > 3')->read();
 	*/
 	function read() {
 
@@ -247,9 +247,11 @@ class MysqlConnection extends DB {
 			$sth = $this->pdo->prepare($query);
 			$sth->execute($this->params);
 			$this->reset();
+			return true;
 		}
 		catch (PDOException $e) {
 			echo 'Ошибка обновления данных :'.$e->getMessage();
+			return false;
 		}
 	}
 

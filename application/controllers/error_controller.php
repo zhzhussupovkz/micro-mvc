@@ -18,7 +18,7 @@ class Error_Controller extends Controller {
 			'code' => 404,
 			'message' => 'Запрашиваемая Вами страница не найдена',
 			);
-		$this->view->render('error/error_404', array('error' => $error));
+		$this->view->render('error/error_'.$error['code'], array('error' => $error));
 	}
 }
 

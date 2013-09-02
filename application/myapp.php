@@ -4,13 +4,13 @@
 class MyApplication {
 
 	//параметры приложения
-	public $params = array();
+	private $params = array();
 
 	/*
-	статичный метод для хранения 
+	статичное свойство для хранения 
 	экземпляра класса MyApplication
 	*/
-	public static $instance;
+	private static $instance;
 
 	//construct
 	protected function __construct() {
@@ -29,7 +29,7 @@ class MyApplication {
 
 	//установка параметров приложения
 	public function setParams() {
-		$this->params = Config::getMainConfig();
+		$this->params = Config::getParams('main');
 	}
 
 	//получение параметров приложения
