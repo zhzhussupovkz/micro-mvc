@@ -1,68 +1,24 @@
 <?php
 
-/*//класс для работы с Memcache - самый самый простой
-class Cache {
-
-	//объект memcache
-	private $memcached;
-
-	//параметры соединения
-	private $conn;
-
-	//объект в кэше
-	protected $cacheObj;
-
-	//constructor
-	public function __construct($conn) {
-		$this->memcached = new Memcache();
-		$this->conn = $conn;
-	}
-
-	//открытие соединения с сервером
-	public function connect() {
-		try {
-			$this->memcached->connect($this->conn['host'], $this->conn['port']);
-			return true;
-		}
-		catch ($e) {
-			echo 'Не удалось подключиться к кэширующему серверу';
-			return false;
-		}
-	}
-
-	//закрыть текущее соединение
-	public function close() {
-		if ($this->connect()) {
-			$this->memcached->close();
-		}
-	}
-
-	//получение значения из кэша
-	public function get($key) {
-		$this->cacheObj = $this->memcached->get($key);
-		return $this->cacheObj;
-	}
-
-	//установка значения в кэш
-	public function set($key, $value, $flag, $time) {
-		$this->memcached->set($key, $value, $flag = false, $time = 3600);
-		$this->cacheObj = $value;
-	}
-}*/
-
-
 //Cache - синглтон класс для работы с Memcache - самый простой (работает)
 class Cache {
 
 	private static $instance = null;
 
-	private $prefix;
+	//префикс
+	private $prefix = 'memc_';
 
+	//текущий ключ
 	private $currentKey;
 
+	//текущий кэш
 	private $currentCache;
 
+	//объект memcache
 	private $memcache;
+
+	//хэш
+	private $hash;
 
 	//статчиный метод получения экземпляра Cache
 	public static function getInstance() {
@@ -79,15 +35,15 @@ class Cache {
 		if(!function_exists('memcache_connect')) {
 			echo 'Memcache не установлен';
 			exit();
-		} else {
-
+		}
+		else {
 			$this->memcache = new Memcache;
 			$config = Config::getParams('memcache');
 			if(!$this->memcache->connect($config['host'], $config['port'])) {
 				echo 'Не удалось подключиться к кэширующему серверу';
 				exit();
+				}
 			}
-			$this->prefix = "mmm_";
 		}
 	}
 
@@ -149,5 +105,15 @@ class Cache {
 	//закрытие соединения
 	public function close() {
 		$this->memcache->close();
+	}
+
+	//включить хэш
+	public function useHash() {
+		$this->hash = Security::useHash(Security::passGenerator(8, 'all'));
+	}
+
+	//использовать префикс
+	public function setPrefix($prefix) {
+		$this->prefix = $prefix;
 	}
 }

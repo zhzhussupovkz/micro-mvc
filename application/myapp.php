@@ -61,7 +61,9 @@ class MyApplication {
 		require_once(APP_PATH.'/core/mysql.php');
 		require_once(APP_PATH.'/core/mongo.php');
 		require_once(APP_PATH.'/core/session.php');
+		require_once(APP_PATH.'/core/security.php');
 		require_once(APP_PATH.'/core/bauth.php');
+		require_once(APP_PATH.'/core/cache.php');
 		require_once(APP_PATH.'/components/user.php');
 		require_once(APP_PATH.'/components/auth.php');
 		require_once(APP_PATH.'/core/request.php');
