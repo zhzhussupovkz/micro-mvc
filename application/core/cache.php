@@ -42,7 +42,6 @@ class Cache {
 			if(!$this->memcache->connect($config['host'], $config['port'])) {
 				echo 'Не удалось подключиться к кэширующему серверу';
 				exit();
-				}
 			}
 		}
 	}
