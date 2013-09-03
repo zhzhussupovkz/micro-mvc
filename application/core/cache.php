@@ -21,7 +21,7 @@ class Cache {
 	private $hash;
 
 	//статчиный метод получения экземпляра Cache
-	public static function getInstance() {
+	public static function init() {
 		if(!isset(self::$instance)) {
 			self::$instance = new self();
 		}
@@ -32,7 +32,7 @@ class Cache {
 
 	//constructor
 	public function __construct() {
-		if(!function_exists('memcache_connect')) {
+		if(!class_exists('Memcache')) {
 			echo 'Memcache не установлен';
 			exit();
 		}
