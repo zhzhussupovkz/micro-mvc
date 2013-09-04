@@ -39,7 +39,7 @@ $db = array(
 
 //параметры соединения с Memcache
 $memcache = array(
-	'host' => 127.0.0.1,
+	'host' => '127.0.0.1',
 	'port' => 11211,
 	);
 

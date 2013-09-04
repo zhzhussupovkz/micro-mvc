@@ -2,6 +2,6 @@
 
 <?php
 	foreach ($data as $person) {
-		echo '<p><b>'.$person['name'].'</b> : '.$person['website'].'</p>';
+		echo '<p><b>'.HtmlHelper::link('person/view/'.$person['id'], $person['name']).'</b> : '.$person['website'].'</p>';
 	}
 ?>

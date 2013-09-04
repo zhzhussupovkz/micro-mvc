@@ -80,7 +80,7 @@ class Cache {
 				return	$this->memcache->replace($this->currentKey, $data, MEMCACHE_COMPRESSED, $interval);
 			}
 		} elseif ($this->memcache->get($this->prefix . $key)) {
-			return $this->memcache->replace($this->prefix . $key, $data, MEMCACHE_COMPRESSED, $interval);
+				return $this->memcache->replace($this->prefix . $key, $data, MEMCACHE_COMPRESSED, $interval);
 		} else {
 			return false;
 		}
