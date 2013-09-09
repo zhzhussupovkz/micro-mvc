@@ -24,3 +24,4 @@ class Config {
 Config::setParams('main', $main);
 Config::setParams('db', $db);
 Config::setParams('memcache', $memcache);
+Config::setParams('cachepath', APP_PATH.'/cache');

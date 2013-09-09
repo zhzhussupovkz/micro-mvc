@@ -13,7 +13,7 @@ class MyApplication {
 	private static $instance;
 
 	//construct
-	protected function __construct() {
+	private function __construct() {
 		$this->setParams();
 	}
 
@@ -63,7 +63,9 @@ class MyApplication {
 		require_once(APP_PATH.'/core/session.php');
 		require_once(APP_PATH.'/core/security.php');
 		require_once(APP_PATH.'/core/bauth.php');
-		require_once(APP_PATH.'/core/cache.php');
+		require_once(APP_PATH.'/core/icache.php');
+		require_once(APP_PATH.'/core/mcache.php');
+		require_once(APP_PATH.'/core/fcache.php');
 		require_once(APP_PATH.'/components/user.php');
 		require_once(APP_PATH.'/components/auth.php');
 		require_once(APP_PATH.'/core/request.php');

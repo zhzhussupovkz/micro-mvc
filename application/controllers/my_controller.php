@@ -59,6 +59,7 @@ class My_Controller extends Controller {
 	//выход
 	public function actionLogout() {
 		Auth::logout();
+		$this->view->setTitle('Hello world!');
 		$this->view->render('home');
 	}
 }
