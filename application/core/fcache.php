@@ -1,7 +1,7 @@
 <?php
 
 //FCache - синглтон класс реализующий механизм кеширования на файлах
-class FCache implements ICache {
+class FCache {
 
 	private static $instance = null;
 
@@ -12,7 +12,10 @@ class FCache implements ICache {
 	private $path;
 
 	//хэш
-	private $hash = null;
+	private $hash = true;
+
+	//время хранения кэша
+	private $interval;
 
 	//статчиный метод получения экземпляра FCache
 	public static function init() {
@@ -26,41 +29,40 @@ class FCache implements ICache {
 
 	//constructor
 	private function __construct() {
-		$this->path = Config::getParams('cachepath');
+		$params = Config::getParams('filecache');
+		$this->path = $params['path'];
+		$this->interval = $params['expire'];
 		if(!is_dir($this->path))
 			mkdir($this->path, 0777, true);
 	}
 
 	//проверка существования данных
 	public function exists($key) {
-		if($this->getFile($key)) {
+		$file = $this->getFileName($key);
+		if (file_exists($file) && (time() - filemtime($file) <= $this->interval)) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	//получение данных по ключу
 	public function get($key) {
-		$file = $this->getFile($key);
-		if(($time = time() - filemtime($file)) < 60) {
+		if ($this->exists($key)) {
+			$file = $this->getFileName($key);
 			$data = unserialize(file_get_contents($file));
 			return $data;
 		} else {
-			unlink($file);
 			return false;
 		}
 	}
 
 	//помещение данных в кэш
-	public function set($key, $data, $interval = 3600) {
-		$interval = (isset($interval)) ? $interval : 3600; //1 час
-		$file = $this->getFile($key);
+	public function set($key, $data) {
+		$file = $this->getFileName($key);
 		if ($file) {
-			chmod($file, 0777);
 			file_put_contents($file, serialize($data));
 		} else {
-			$file = $this->path .'/'. $this->prefix . $key. '.bin';
+			$file = $this->getFileName($key);
 			$link = fopen($file, 'a');
 			fclose($link);
 			chmod($file, 0777);
@@ -70,8 +72,8 @@ class FCache implements ICache {
 
 	//удаление данных по ключу
 	public function delete($key) {
-		if($this->getFile($key)) {
-			$file = $this->getFile($key);
+		if($this->getFileName($key)) {
+			$file = $this->getFileName($key);
 			return unlink($file);
 		} else {
 			return false;
@@ -92,11 +94,10 @@ class FCache implements ICache {
 	}
 
 	//обновление
-	public function update($key, $data, $interval) {
-		$interval = (isset($interval)) ? $interval : 3600;
+	public function update($key, $data) {
 		if ($this->exists($key)) {
 			$this->delete($key);
-			return $this->set($key, $data, $interval);
+			return $this->set($key, $data);
 		} else {
 			return false;
 		}
@@ -109,16 +110,16 @@ class FCache implements ICache {
 
 	//включить хэш
 	public function useHash() {
-		$this->hash = Security::useHash(Security::passGenerator(8, 'all'));
+		$this->hash = true;
 	}
 
 	//получения файла по ключу
-	private function getFile($key) {
-		$file = $this->path.'/'.$this->prefix. $key.'.bin';
-		if (file_exists($file)) {
-			return $file;
+	private function getFileName($key) {
+		if ($this->hash) {
+			$name = md5($key);
 		} else {
-			return false;
+			$name = $key;
 		}
+		return $this->path .'/'. $this->prefix . $name. '.tmp';
 	}
 }

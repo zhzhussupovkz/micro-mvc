@@ -43,3 +43,8 @@ $memcache = array(
 	'port' => 11211,
 	);
 
+$filecache = array(
+	'path' => APP_PATH.'/cache',
+	'expire' => 15*60,
+	)
+
