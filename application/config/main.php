@@ -46,5 +46,5 @@ $memcache = array(
 $filecache = array(
 	'path' => APP_PATH.'/cache',
 	'expire' => 15*60,
-	)
+	);
 
