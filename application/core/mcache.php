@@ -17,8 +17,8 @@ class MCache implements ICache {
 	//объект memcache
 	private $memcache;
 
-	//хэш
-	private $hash = null;
+	//использовать ли хэш
+	private $hash = true;
 
 	//статчиный метод получения экземпляра MCache
 	public static function init() {
@@ -39,6 +39,7 @@ class MCache implements ICache {
 		else {
 			$this->memcache = new Memcache;
 			$config = Config::getParams('memcache');
+			$this->interval = $config['expire'];
 			if(!$this->memcache->connect($config['host'], $config['port'])) {
 				echo 'Не удалось подключиться к кэширующему серверу';
 				exit();
@@ -48,9 +49,9 @@ class MCache implements ICache {
 
 	//проверка существования данных
 	public function exists($key) {
-		if($this->memcache->get($this->prefix . $key)) {
-			$this->currentCache = $this->memcache->get($this->prefix . $key);
-			$this->currentKey = $this->prefix . $key;
+		if($this->memcache->get($this->prefix . md5($key))) {
+			$this->currentCache = $this->memcache->get($this->prefix . md5($key));
+			$this->currentKey = $this->prefix . md5($key);
 			return true;
 		} else {
 			return false;
@@ -59,23 +60,23 @@ class MCache implements ICache {
 
 	//получение данных по ключу
 	public function get($key) {
-		if(($this->prefix . $key) == $this->currentKey) {
+		if(($this->prefix . md5($key)) == $this->currentKey) {
 			return $this->currentCache;
 		} else {
-			return $this->memcache->get($this->prefix . $key);
+			return $this->memcache->get($this->prefix . md5($key));
 		}
 	}
 
 	//помещение данных в кэш
 	public function set($key, $data, $interval) {
-		$interval = (isset($interval)) ? $interval : 3600;
-		return $this->memcache->set($this->prefix . $key, $data, MEMCACHE_COMPRESSED, $interval);
+		$interval = (isset($interval)) ? $interval : $this->interval;
+		return $this->memcache->set($this->prefix . md5($key), $data, MEMCACHE_COMPRESSED, $interval);
 	}
 
 	//удаление данных по ключу
 	public function delete($key) {
-		if($this->memcache->get($this->prefix . $key)) {
-			return $this->memcache->delete($this->prefix . $key);
+		if($this->memcache->get($this->prefix . md5($key))) {
+			return $this->memcache->delete($this->prefix . md5($key));
 		} else {
 			return false;
 		}
@@ -88,14 +89,14 @@ class MCache implements ICache {
 
 	//обновление
 	public function update($key, $data, $interval) {
-		$interval = (isset($interval)) ? $interval : 3600;
+		$interval = (isset($interval)) ? $interval : $this->interval;
 		
 		if($this->prefix . $this->currentKey) {
 			if(!empty($this->currentCache)) {
 				return	$this->memcache->replace($this->currentKey, $data, MEMCACHE_COMPRESSED, $interval);
 			}
-		} elseif ($this->memcache->get($this->prefix . $key)) {
-				return $this->memcache->replace($this->prefix . $key, $data, MEMCACHE_COMPRESSED, $interval);
+		} elseif ($this->memcache->get($this->prefix . md5($key))) {
+				return $this->memcache->replace($this->prefix . md5($key), $data, MEMCACHE_COMPRESSED, $interval);
 		} else {
 			return false;
 		}
@@ -104,11 +105,6 @@ class MCache implements ICache {
 	//использовать префикс
 	public function setPrefix($prefix) {
 		$this->prefix = $prefix;
-	}
-
-	//включить хэш
-	public function useHash() {
-		$this->hash = Security::useHash(Security::passGenerator(8, 'all'));
 	}
 
 	//закрытие соединения

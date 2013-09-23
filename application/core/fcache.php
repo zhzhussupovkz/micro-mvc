@@ -11,9 +11,6 @@ class FCache implements ICache {
 	//папка для хранения файлов кэша
 	private $path;
 
-	//хэш
-	private $hash = true;
-
 	//интервал по умолчанию
 	private $interval;
 
@@ -122,18 +119,8 @@ class FCache implements ICache {
 		$this->prefix = $prefix;
 	}
 
-	//включить хэш
-	public function useHash() {
-		$this->hash = true;
-	}
-
 	//получения файла по ключу
 	private function getFileName($key) {
-		if ($this->hash) {
-			$name = md5($key);
-		} else {
-			$name = $key;
-		}
-		return $this->path .'/'. $this->prefix . $name. '.tmp';
+		return $this->path .'/'. $this->prefix . md5($key). '.tmp';
 	}
 }

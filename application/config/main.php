@@ -41,10 +41,11 @@ $db = array(
 $memcache = array(
 	'host' => '127.0.0.1',
 	'port' => 11211,
+	'expire' => 900,
 	);
 
 $filecache = array(
 	'path' => APP_PATH.'/cache',
-	'expire' => 15*60,
+	'expire' => 900,
 	);
 

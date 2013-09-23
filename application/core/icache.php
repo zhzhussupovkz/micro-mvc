@@ -26,8 +26,5 @@ interface ICache {
 
 	//использовать префикс
 	public function setPrefix($prefix);
-
-	//включить хэш
-	public function useHash();
 }
 
