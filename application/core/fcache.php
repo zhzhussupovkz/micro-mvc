@@ -1,7 +1,7 @@
 <?php
 
 //FCache - синглтон класс реализующий механизм кеширования на файлах
-class FCache {
+class FCache implements ICache {
 
 	private static $instance = null;
 
@@ -14,7 +14,7 @@ class FCache {
 	//хэш
 	private $hash = true;
 
-	//время хранения кэша
+	//интервал по умолчанию
 	private $interval;
 
 	//статчиный метод получения экземпляра FCache
@@ -39,8 +39,16 @@ class FCache {
 	//проверка существования данных
 	public function exists($key) {
 		$file = $this->getFileName($key);
-		if (file_exists($file) && (time() - filemtime($file) <= $this->interval)) {
-			return true;
+		if (file_exists($file)) {
+			$file = $this->getFileName($key);
+			$data = unserialize(file_get_contents($file));
+			if (time() <= ($data['time'] + $data['expire'])) {
+				return true;
+			} else {
+				unlink($file);
+				clearstatcache();
+				return false;
+			}
 		}
 		return false;
 	}
@@ -50,23 +58,28 @@ class FCache {
 		if ($this->exists($key)) {
 			$file = $this->getFileName($key);
 			$data = unserialize(file_get_contents($file));
-			return $data;
-		} else {
-			return false;
+			return $data['cache'];
 		}
+		return false;
 	}
 
 	//помещение данных в кэш
-	public function set($key, $data) {
+	public function set($key, $data, $interval) {
+		$interval = isset($interval) ? $interval : $this->interval;
 		$file = $this->getFileName($key);
+		$write = array(
+			'cache' => $data,
+			'time' => time(),
+			'expire' => $interval,
+			);
 		if ($file) {
-			file_put_contents($file, serialize($data));
+			file_put_contents($file, serialize($write));
 		} else {
 			$file = $this->getFileName($key);
 			$link = fopen($file, 'a');
 			fclose($link);
 			chmod($file, 0777);
-			file_put_contents($file, serialize($data));
+			file_put_contents($file, serialize($write));
 		}
 	}
 
@@ -95,9 +108,10 @@ class FCache {
 
 	//обновление
 	public function update($key, $data) {
+		$interval = isset($interval) ? $interval : $this->interval;
 		if ($this->exists($key)) {
 			$this->delete($key);
-			return $this->set($key, $data);
+			return $this->set($key, $data, $interval);
 		} else {
 			return false;
 		}
