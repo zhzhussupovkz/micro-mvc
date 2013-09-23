@@ -104,7 +104,7 @@ class FCache implements ICache {
 	}
 
 	//обновление
-	public function update($key, $data) {
+	public function update($key, $data, $interval) {
 		$interval = isset($interval) ? $interval : $this->interval;
 		if ($this->exists($key)) {
 			$this->delete($key);
