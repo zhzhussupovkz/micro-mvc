@@ -1,13 +1,13 @@
 <?php
 
 //контроллер для работы с моделью Person
-class Person_Controller extends Controller {
+class PersonController extends Controller {
 
 	//construct
 	public function __construct() {
 		parent::__construct();
-		$this->setModel(new Person_Model());
-		$this->load->helper('html');
+		$this->setModel(new PersonModel());
+		$this->load->helper('Html');
 	}
 
 	//все пользователи

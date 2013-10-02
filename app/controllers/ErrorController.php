@@ -1,12 +1,12 @@
 <?php
 
 //контроллер для генерации ошибок
-class Error_Controller extends Controller {
+class ErrorController extends Controller {
 
 	//constructor
 	public function __construct() {
 		parent::__construct();
-		$this->load->helper('html');
+		$this->load->helper('Html');
 	}
 
 	//ошибка 404

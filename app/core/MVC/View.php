@@ -34,7 +34,7 @@ class View {
 
 	//базовый URL приложения
 	public function baseUrl() {
-		$url = MyApplication::get()->params('baseUrl');
+		$url = MyApp::get()->params('baseUrl');
 		return $url;
 	}
 

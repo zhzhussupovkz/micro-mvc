@@ -1,14 +1,14 @@
 <?php
 
 //приложение
-class MyApplication {
+class MyApp {
 
 	//параметры приложения
 	private $params = array();
 
 	/*
 	статичное свойство для хранения 
-	экземпляра класса MyApplication
+	экземпляра класса MyApp
 	*/
 	private static $instance;
 
@@ -38,7 +38,7 @@ class MyApplication {
 	}
 
 	/*
-	создаем объект MyApplication и 
+	создаем объект MyApp и 
 	сохраняем его в статичном методе $instance
 	*/
 	public static function get() {
@@ -52,23 +52,7 @@ class MyApplication {
 
 	//запуск нового приложения
 	public static function run() {
-		require_once(APP_PATH.'/config/config.php');
-		require_once(APP_PATH.'/core/load.php');
-		require_once(APP_PATH.'/core/controller.php');
-		require_once(APP_PATH.'/core/model.php');
-		require_once(APP_PATH.'/core/view.php');
-		require_once(APP_PATH.'/core/db.php');
-		require_once(APP_PATH.'/core/mysql.php');
-		require_once(APP_PATH.'/core/mongo.php');
-		require_once(APP_PATH.'/core/session.php');
-		require_once(APP_PATH.'/core/security.php');
-		require_once(APP_PATH.'/core/bauth.php');
-		require_once(APP_PATH.'/core/icache.php');
-		require_once(APP_PATH.'/core/mcache.php');
-		require_once(APP_PATH.'/core/fcache.php');
-		require_once(APP_PATH.'/components/user.php');
-		require_once(APP_PATH.'/components/auth.php');
-		require_once(APP_PATH.'/core/request.php');
-		require_once(APP_PATH.'/core/route.php');
+		require_once(APP_PATH.'/core/Lib/Autoloader.php');
+		Autoloader::init();
 	}
 }

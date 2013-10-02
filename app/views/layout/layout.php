@@ -14,7 +14,7 @@
 		<div class = 'container'>
 			<div class="navbar navbar-inverse">
 			<div class="navbar-inner">
-			<a class="brand" href="<?php echo HtmlHelper::newUrl(); ?>"><?php echo MyApplication::get()->params('name'); ?></a>
+			<a class="brand" href="<?php echo HtmlHelper::newUrl(); ?>"><?php echo MyApp::get()->params('name'); ?></a>
 			<ul class="nav">
 				<li class="active"><?php echo HtmlHelper::link('my', 'Home'); ?></li>
 				<li><?php echo HtmlHelper::link('my/about', 'About', array('id' => 'about')); ?></li>
@@ -67,7 +67,7 @@
 
 	<div id = 'footer'>
 		<div class="container">
-			<p class="muted credit">Copyright &copy; <?php echo date('Y');?> by <b><?php echo MyApplication::get()->params('name');?></b>
+			<p class="muted credit">Copyright &copy; <?php echo date('Y');?> by <b><?php echo MyApp::get()->params('name');?></b>
 			<br/>Design: <a href="http://twitter.github.io/bootstrap">Twitter Bootstrap</a></p>
 		</div>
 	</div>

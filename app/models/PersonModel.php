@@ -1,7 +1,7 @@
 <?php
 
 //модель Person
-class Person_Model extends MysqlModel {
+class PersonModel extends MysqlModel {
 
 	//имя
 	private $name;

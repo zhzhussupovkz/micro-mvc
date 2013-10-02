@@ -1,6 +1,6 @@
 <?php
 
-class My_Model extends MysqlModel {
+class MyModel extends MysqlModel {
 
 	public function getUsers() {
 		$table = 'user';

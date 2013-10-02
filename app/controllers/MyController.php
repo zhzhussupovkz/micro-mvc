@@ -1,12 +1,12 @@
 <?php
 
 //контроллер по умолчанию
-class My_Controller extends Controller {
+class MyController extends Controller {
 
 	//constructor
 	public function __construct() {
 		parent::__construct();
-		$this->load->helper('html');
+		$this->load->helper('Html');
 		$this->view->setStyle('style');
 	}
 
@@ -26,7 +26,7 @@ class My_Controller extends Controller {
 
 	//форма обратной связи
 	public function actionContact() {
-		$this->load->helper('email');
+		$this->load->helper('Email');
 		$this->view->setTitle('Contact');
 		if (isset($_POST['name'])) {
 			$data = array(

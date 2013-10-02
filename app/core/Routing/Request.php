@@ -19,7 +19,7 @@ class Request {
 
 		//функция фильтрации по совпадению с baseUrl
 		function base($var) {
-			$baseUrl = MyApplication::get()->params('baseUrl');
+			$baseUrl = MyApp::get()->params('baseUrl');
 			$baseUrl = str_replace('http://'.$_SERVER['HTTP_HOST'].'/', '',$baseUrl);
 			return ($var != $baseUrl);
 		}
@@ -28,10 +28,10 @@ class Request {
 		$uri = array_filter($uri, 'base');
 
 		//контроллер
-		$this->controller = ($c = array_shift($uri)) ? $c : MyApplication::get()->params('defaultController');
+		$this->controller = ($c = array_shift($uri)) ? $c : MyApp::get()->params('defaultController');
 
 		//экшен
-		$this->action = ($c = array_shift($uri)) ? $c : MyApplication::get()->params('defaultAction');
+		$this->action = ($c = array_shift($uri)) ? $c : MyApp::get()->params('defaultAction');
 
 		//параметры в запросе
 		$this->params = (isset($uri[0])) ? $uri : array();

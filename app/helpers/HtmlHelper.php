@@ -5,7 +5,7 @@ class HtmlHelper extends Helper {
 
 	//базовый URL приложения
 	public static function baseUrl() {
-		return MyApplication::get()->params('baseUrl');
+		return MyApp::get()->params('baseUrl');
 	}
 
 	//создает URL

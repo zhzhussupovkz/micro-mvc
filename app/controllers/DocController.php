@@ -1,12 +1,12 @@
 <?php
 
 //контроллер для документации по фреймворку
-class Doc_Controller extends Controller {
+class DocController extends Controller {
 
 	//constructor
 	public function __construct() {
 		parent::__construct();
-		$this->load->helper('html');
+		$this->load->helper('Html');
 	}
 
 	//действие по умолчанию

@@ -6,20 +6,20 @@ class Route {
 	public static function start(Request $request) {
 
 		//префиксы для имен контроллера, модели, экшена
-		$controllerName = $request->getController().'_Controller';
-		$modelName = $request->getController().'_Model';
+		$controllerName = ucfirst($request->getController()).'Controller';
+		$modelName = ucfirst($request->getController()).'Model';
 		$actionName = 'action'.$request->getAction();
 		$params = $request->getParams();
 
 		//подключение файла с классом модели
-		$modelFile = strtolower($modelName.'.php');
+		$modelFile = $modelName.'.php';
 		$modelPath = APP_PATH.'/models/'.$modelFile;
 		if (file_exists($modelPath)) {
 			require_once($modelPath);
 		}
 
 		//подключение файлов с классами контроллеров
-		$controllerFile = strtolower($controllerName.'.php');
+		$controllerFile = $controllerName.'.php';
 		$controllerPath = APP_PATH.'/controllers/'.$controllerFile;
 		if(file_exists($controllerPath)) {
 			require_once($controllerPath);
@@ -48,8 +48,8 @@ class Route {
 
 	//Код ошибки 404
 	public static function Error404() {
-		require_once(APP_PATH.'/controllers/error_controller.php');
-		$controller = new Error_Controller;
+		require_once(APP_PATH.'/controllers/ErrorController.php');
+		$controller = new ErrorController;
 		$controller->action404();
 	}
 }
