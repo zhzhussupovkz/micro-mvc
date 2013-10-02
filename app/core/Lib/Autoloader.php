@@ -10,10 +10,15 @@ class Autoloader {
 		require_once(APP_PATH.'/core/Lib/Security.php');
 		require_once(APP_PATH.'/core/Lib/BaseAuth.php');
 		require_once(APP_PATH.'/core/DB/DB.php');
-		require_once(APP_PATH.'/core/DB/Mysql.php');
-		require_once(APP_PATH.'/core/DB/Mongo.php');
+		require_once(APP_PATH.'/core/DB/MysqlDB.php');
+		require_once(APP_PATH.'/core/DB/MongoDB.php');
+		require_once(APP_PATH.'/core/DB/DBFactory.php');
+		require_once(APP_PATH.'/core/DB/MysqlDBFactory.php');
+		require_once(APP_PATH.'/core/DB/MongoDBFactory.php');
 		require_once(APP_PATH.'/core/MVC/Controller.php');
 		require_once(APP_PATH.'/core/MVC/Model.php');
+		require_once(APP_PATH.'/core/MVC/MysqlModel.php');
+		require_once(APP_PATH.'/core/MVC/MongoModel.php');
 		require_once(APP_PATH.'/core/MVC/View.php');
 		require_once(APP_PATH.'/core/Caching/ICache.php');
 		require_once(APP_PATH.'/core/Caching/MCache.php');

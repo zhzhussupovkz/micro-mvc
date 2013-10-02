@@ -1,7 +1,7 @@
 <?php
 
-//MysqlConnection - класс для работы с СУБД MySQL
-class MysqlConnection extends DB {
+//MysqlDB - класс для работы с СУБД MySQL
+class MysqlDB extends DB {
 
 	//prepared statements
 	public $params;

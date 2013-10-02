@@ -1,7 +1,7 @@
 <?php
 
-//MongoConnection - класс для работы с MongoDb
-class MongoConnection extends DB {
+//MongoDB - класс для работы с MongoDb
+class MongoDB extends DB {
 
 	//текущий клиент mongo
 	public $client;
