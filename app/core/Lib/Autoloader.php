@@ -9,6 +9,7 @@ class Autoloader {
 		require_once(APP_PATH.'/core/Lib/Session.php');
 		require_once(APP_PATH.'/core/Lib/Security.php');
 		require_once(APP_PATH.'/core/Lib/BaseAuth.php');
+		require_once(APP_PATH.'/core/Lib/Logger.php');
 		require_once(APP_PATH.'/core/DB/DB.php');
 		require_once(APP_PATH.'/core/DB/MysqlDB.php');
 		require_once(APP_PATH.'/core/DB/MongoDB.php');

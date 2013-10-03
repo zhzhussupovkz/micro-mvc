@@ -49,3 +49,6 @@ $filecache = array(
 	'expire' => 900,
 	);
 
+//параметры логгирования
+$log = array('error', 'access');
+

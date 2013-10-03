@@ -25,3 +25,4 @@ Config::setParams('main', $main);
 Config::setParams('db', $db);
 Config::setParams('memcache', $memcache);
 Config::setParams('filecache', $filecache);
+Config::setParams('log', $log);

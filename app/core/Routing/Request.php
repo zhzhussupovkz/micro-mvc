@@ -12,6 +12,9 @@ class Request {
 	//constructor
 	public function __construct() {
 
+		//старт логгирования
+		Logger::access();
+
 		//текущий URL
 		$curl = $_SERVER['REQUEST_URI'];
 		$uri = explode('/', $curl);

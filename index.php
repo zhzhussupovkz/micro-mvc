@@ -3,6 +3,9 @@
 //директория приложения
 define('APP_PATH', dirname(__FILE__).'/app');
 
+//директория для логгирования
+define('LOG_PATH', dirname(__FILE__).'/app/log');
+
 /*
 показ ошибок - включен в режиме development
 закомментировать для режима production
