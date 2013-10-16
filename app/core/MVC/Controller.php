@@ -2,8 +2,9 @@
 
 //класс Controller
 class Controller {
-	public $model;
-	public $view;
+
+	protected $model;
+	protected $view;
 	public $load;
 
 	//constructor
@@ -16,4 +17,5 @@ class Controller {
 	public function setModel($model) {
 		$this->model = $model;
 	}
+
 }
