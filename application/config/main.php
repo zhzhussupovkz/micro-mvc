@@ -9,7 +9,7 @@ $main = array(
 	'adminEmail' => 'mycompany@mycompany.com',
 
 	//базовый URL приложения
-	'baseUrl'=>  'http://localhost/micro-mvc',
+	'baseUrl'=>  'http://'.$_SERVER['HTTP_HOST'],
 
 	//контроллер по умолчанию
 	'defaultController' => 'my',

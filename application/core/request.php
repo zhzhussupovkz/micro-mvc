@@ -17,16 +17,6 @@ class Request {
 		$uri = explode('/', $curl);
 		$uri = array_filter($uri);
 
-		//функция фильтрации по совпадению с baseUrl
-		function base($var) {
-			$baseUrl = MyApplication::get()->params('baseUrl');
-			$baseUrl = str_replace('http://'.$_SERVER['HTTP_HOST'].'/', '',$baseUrl);
-			return ($var != $baseUrl);
-		}
-
-		//фильтруем
-		$uri = array_filter($uri, 'base');
-
 		//контроллер
 		$this->controller = ($c = array_shift($uri)) ? $c : MyApplication::get()->params('defaultController');
 

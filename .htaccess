@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /micro-mvc/
+RewriteBase /
 
 # if a directory or a file exists, use it directly
 RewriteCond %{REQUEST_FILENAME} !-f
